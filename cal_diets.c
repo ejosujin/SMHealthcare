@@ -34,7 +34,12 @@ void loadDiets(const char* DIETFILEPATH) {
     }
 
      // ToCode: to read a list of the diets from the given file
-    while () {
+        while (fscanf(file, "%s %d", food_name[MAX_FOOD_NAME_LEN], &calories_intake)==2) { //12/12 load data
+    	strncpy(diet_list[diet_list_size].food_name, food_name, MAX_FOOD_NAME_LEN - 1); //12/12 store diet's data
+        diet_list[diet_list_size].food_name[MAX_FOOD_NAME_LEN - 1] = '\0';
+        diet_list[diet_list_size].calories_intake = calories_intake;
+		
+    	diet_list_size++;
     	
         if (diet_list_size >= MAX_DIETS){
         	break;
@@ -56,17 +61,34 @@ void inputDiet(HealthData* health_data) {
     int choice, i;
     
     // ToCode: to provide the options for the diets to be selected
-    printf("The list of diets:\n");
-    
+    printf("The list of diets:\n"); 
+    for (i = 0; i < diet_list_size; i++) //12/12
+    {
+    	printf("%d. %s - %d kcal\n", i + 1, diet_list[i].food_name, diet_list[i].calories_intake);
+	}
     
 	// ToCode: to enter the diet to be chosen with exit option
+    printf("choose diet number(0:exit option): "); //12/12
+    scanf("%d", &choice);
     
+	if (choice == 0) //12/12 exit option
+	{
+        printf("EXIT\n");
+        return;
+	}
+	
+	if (choice < 1 || choice > diet_list_size) //12/12 while choice number is wrong->exit
+	{
+		printf("chosen number is wrong\n");
+		return;
+	}
 
-    // ToCode: to enter the selected diet in the health data
-    
+    // ToCode: to enter the selected diet in the health data 
+    strcpy(health_data->diet.food_name, diet_list[choice - 1].food_name); //12/12
+    health_data->diet.calories_intake = diet_list[choice - 1].calories_intake;
 
     // ToCode: to enter the total calories intake in the health data
-
-
+	health_data->total_calories_intake += diet_list[choice - 1].calories_intake; //12/12
+	health_data->diet_count++;
 }
 

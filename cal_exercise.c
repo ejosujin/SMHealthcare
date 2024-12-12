@@ -33,8 +33,13 @@ void loadExercises(const char* EXERCISEFILEPATH) {
         return;
     }
 
-    // ToCode: to read a list of the exercises from the given file
-    while ( ) {
+    // ToCode: to read a list of the exercises from the given file 
+    while (fscanf(file, "%s %d", exercise_name, &calories_burned_per_minute) == 2) { //load data
+    	strncpy(exercise_list[exercise_list_size].exercise_name, exercise_name, MAX_EXERCISE_NAME_LEN - 1); //store exercise's data
+    	exercise_list[exercise_list_size].exercise_name[MAX_EXERCISE_NAME_LEN - 1] = '\0';
+    	exercise_list[exercise_list_size].calories_burned_per_minute = calories_burned_per_minute;
+        
+        exercise_list_size++;
     	
         if (exercise_list_size >= MAX_EXERCISES){
         	break;
@@ -59,18 +64,36 @@ void inputExercise(HealthData* health_data) {
     int choice, duration, i;
     
     // ToCode: to provide the options for the exercises to be selected
-    printf("The list of exercises: \n");
-
+    printf("The list of exercises: \n"); //12/12
+	for (i = 0; i < exercise_list_size; i++)
+	{
+		printf("%d. %s - %d calories per minute\n", i + 1, exercise_list[i].exercise_name, exercise_list[i].calories_burned_per_minute);
+	}
 
     // ToCode: to enter the exercise to be chosen with exit option
-
- 
+	printf("choose exercise number(0:exit option): ");
+    scanf("%d", &choice);
     
-    // To enter the duration of the exercise
+	if (choice == 0) //12/12 exit option
+	{
+        printf("EXIT\n");
+        return;
+	}
+	
+	if (choice < 1 || choice > exercise_list_size) //12/12 while choice number is wrong->exit
+	{
+		printf("chosen number is wrong\n");
+		return;
+	}
+ 
+     // To enter the duration of the exercise
     printf("Enter the duration of the exercise (in min.): ");
     scanf("%d", &duration);
 
     // ToCode: to enter the selected exercise and total calcories burned in the health data
+    int calories_burned = exercise_list[choice - 1].calories_burned_per_minute * duration;
     
-
+	health_data->exercises[health_data->exercise_count] = exercise_list[choice - 1];
+    health_data->exercise_count++;
+    health_data->total_calories_burned += calories_burned;
 }

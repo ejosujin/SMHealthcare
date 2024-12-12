@@ -24,11 +24,12 @@ int main() {
     HealthData health_data = {0};
     
     // Tocode: to read the list of the exercises and diets
-    
+    loadDiets(DIETFILEPATH);       // diets.txt data load
+	loadExercises(EXERCISEFILEPATH); // exercises.txt data load
 
     // ToCode: to run the "Healthcare Management Systems" until all calories are used up or the user wants to exit the system
     do {
-    	if ( ){
+    	if (total_calories_intake-BASAL_METABOLIC_RATE-total_calories_burned==0 ){
             printf("You have consumed all your calories for today! \n");
 		} 
 		else{
