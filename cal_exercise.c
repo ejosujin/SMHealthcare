@@ -96,6 +96,7 @@ void inputExercise(HealthData* health_data) {
     int calories_burned = exercise_list[choice - 1].calories_burned_per_minute * duration;
     
 	health_data->exercises[health_data->exercise_count] = exercise_list[choice - 1];
+	health_data->durations[health_data->exercise_count] = duration;
     health_data->exercise_count++;
     health_data->total_calories_burned += calories_burned;
 }
