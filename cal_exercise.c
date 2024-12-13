@@ -34,16 +34,18 @@ void loadExercises(const char* EXERCISEFILEPATH) {
     }
 
     // ToCode: to read a list of the exercises from the given file 
-    while (fscanf(file, "%s %d", exercise_name, &calories_burned_per_minute) == 2) { //load data
-    	strncpy(exercise_list[exercise_list_size].exercise_name, exercise_name, MAX_EXERCISE_NAME_LEN - 1); //store exercise's data
-    	exercise_list[exercise_list_size].exercise_name[MAX_EXERCISE_NAME_LEN - 1] = '\0';
-    	exercise_list[exercise_list_size].calories_burned_per_minute = calories_burned_per_minute;
-        
+    // Use Diet structure directly
+    Exercise temp_exercise; //compile error
+
+    while (fscanf(file, "%s %d", temp_exercise.exercise_name, &temp_exercise.calories_burned_per_minute) == 2) {
+        strncpy(exercise_list[exercise_list_size].exercise_name, temp_exercise.exercise_name, MAX_EXERCISE_NAME_LEN - 1);
+        exercise_list[exercise_list_size].exercise_name[MAX_EXERCISE_NAME_LEN - 1] = '\0';
+        exercise_list[exercise_list_size].calories_burned_per_minute = temp_exercise.calories_burned_per_minute;
+
         exercise_list_size++;
-    	
-        if (exercise_list_size >= MAX_EXERCISES){
-        	break;
-		}
+        if (exercise_list_size >= MAX_EXERCISES) {
+            break;
+        }
     }
 
     fclose(file);

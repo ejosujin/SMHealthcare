@@ -28,9 +28,10 @@ int main() {
 	loadExercises(EXERCISEFILEPATH); // exercises.txt data load //12/12
 
     // ToCode: to run the "Healthcare Management Systems" until all calories are used up or the user wants to exit the system
+    //int The_remaining_calories = health_data.total_calories_intake - BASAL_METABOLIC_RATE - health_data.total_calories_burned; //compile error 
+    updateRemainingCalories(&health_data); 
     do {
-    	int The_remaining_calories = health_data->total_calories_intake - BASAL_METABOLIC_RATE - health_data->total_calories_burned;
-    	if (The_remaining_calories == 0 ){ //12/12->12/13 variable declaration remaining calories
+    	if (health_data.remaining_calories == 0 ){ //12/12->12/13 variable declaration remaining calories
             printf("You have consumed all your calories for today! \n");
 		} 
 		else{
@@ -69,7 +70,7 @@ int main() {
                 printf("[Error] Invalid option. \n");
                 printf("Please try again! \n");
         }
-    } while (choice != 4 && The_remaining_calories != 0 ); //12/13
+    } while (choice != 4 && health_data.remaining_calories != 0 ); //12/13
 
     return 0;
 }

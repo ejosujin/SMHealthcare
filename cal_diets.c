@@ -33,18 +33,22 @@ void loadDiets(const char* DIETFILEPATH) {
         return;
     }
 
-     // ToCode: to read a list of the diets from the given file
-        while (fscanf(file, "%s %d", food_name[MAX_FOOD_NAME_LEN], &calories_intake)==2) { //12/12 load data
-    	strncpy(diet_list[diet_list_size].food_name, food_name, MAX_FOOD_NAME_LEN - 1); //12/12 store diet's data
+    // ToCode: to read a list of the diets from the given file
+    // Use Diet structure directly
+    Diet temp_diet; //compile error
+    
+    while (fscanf(file, "%s %d", temp_diet.food_name, &temp_diet.calories_intake) == 2) 
+	{
+        strncpy(diet_list[diet_list_size].food_name, temp_diet.food_name, MAX_FOOD_NAME_LEN - 1);
         diet_list[diet_list_size].food_name[MAX_FOOD_NAME_LEN - 1] = '\0';
-        diet_list[diet_list_size].calories_intake = calories_intake;
-		
-    	diet_list_size++;
-    	
-        if (diet_list_size >= MAX_DIETS){
-        	break;
-		}
-    }
+        diet_list[diet_list_size].calories_intake = temp_diet.calories_intake;
+
+        diet_list_size++;
+        if (diet_list_size >= MAX_DIETS) 
+		{
+            break;
+        }
+    } 
     fclose(file);
 }
 
@@ -84,8 +88,10 @@ void inputDiet(HealthData* health_data) {
 	}
 
     // ToCode: to enter the selected diet in the health data 
-    strcpy(health_data->diet.food_name, diet_list[choice - 1].food_name); //12/12
-    health_data->diet.calories_intake = diet_list[choice - 1].calories_intake;
+    //strcpy(health_data->diet[health_data->diet_count].food_name, diet_list[choice - 1].food_name); //compile error
+    strncpy(health_data->diet[health_data->diet_count].food_name, diet_list[choice - 1].food_name, MAX_FOOD_NAME_LEN - 1);
+	health_data->diet[health_data->diet_count].food_name[MAX_FOOD_NAME_LEN - 1] = '\0'; 
+	health_data->diet[health_data->diet_count].calories_intake = diet_list[choice - 1].calories_intake;
 
     // ToCode: to enter the total calories intake in the health data
 	health_data->total_calories_intake += diet_list[choice - 1].calories_intake; //12/12

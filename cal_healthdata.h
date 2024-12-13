@@ -34,17 +34,19 @@ typedef struct {
 // health data  definition for linked list
 typedef struct {
 Exercise exercises[MAX_EXERCISES];  // exercise history
-    Diet diet[MAX_DIETS];                // diet history
+    Diet diet[MAX_DIETS];    		// diet history
+    int durations[MAX_EXERCISES];
     int exercise_count;                  // number of exercises
     int diet_count;                      // number of diets
     int total_calories_burned;           // total calories burned
     int total_calories_intake;           // total calories intake
+    int remaining_calories;
 } HealthData;
 
 
 
 void saveData(const char* HEALTHFILEPATH,const HealthData* health_data);
 void printHealthData(const HealthData* health_data);
-
+void updateRemainingCalories(HealthData* health_data);
 
 #endif /* cal_diets_h */
